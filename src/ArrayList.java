@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class ArrayList {
     private int ptr = -1;
     private int size;
@@ -18,19 +20,17 @@ public class ArrayList {
 
     }
 
-    public void add(Integer element, Integer index) {
-        if (index >= arr.length || index < 0) throw new IndexOutOfBoundsException("Index out of bounds");
-
+    public int indexOf(Integer element) {
+        for (int i = 0; i < arr.length; i++) {
+            if (Objects.equals(element, arr[i])) return i;
+        }
+        return -1;
     }
 
     public void remove() {
         if (isEmpty()) throw new RuntimeException("List is empty");
         arr[ptr--] = null;
         size--;
-    }
-
-    public void remove(int index) {
-        if (index >= arr.length || index < 0) throw new IndexOutOfBoundsException("Index out of bounds");
     }
 
     public int length() {

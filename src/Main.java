@@ -13,11 +13,7 @@ public class Main {
         System.out.println(arrList.length());
         System.out.println(arrList);
 
-
-        arrList.remove();
-        arrList.remove();
-        arrList.remove();
-        arrList.remove();
+        System.out.println(arrList.indexOf(13));
 
 
 
