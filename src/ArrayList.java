@@ -7,7 +7,7 @@ public class ArrayList {
 
     public ArrayList() {
         arr = new Integer[16];
-    }
+    } //default array list to size 16
 
     public ArrayList(int size) {
         arr = new Integer[size];
