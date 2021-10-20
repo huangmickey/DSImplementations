@@ -15,6 +15,7 @@ public class LinkedList {
 
     private Node head;
 
+    // O(N) time complexity --> Adding new node at end of linked list requires traversing N node elements until the end before adding new node
     public void add(int data) {
         Node nextNode = new Node(data);
 
@@ -28,7 +29,7 @@ public class LinkedList {
             currNode.next = nextNode;
         }
     }
-
+    // O(N) time complexity --> Removing node at end of linked list requires traversing N nodes until end of list before removing node
     public int remove() {
         if (isEmpty()) throw new NoSuchElementException();
         Node currNode = head;
@@ -42,7 +43,7 @@ public class LinkedList {
         return removedData;
 
     }
-
+    // O(1)
     public boolean isEmpty() {
         return head == null;
     }
