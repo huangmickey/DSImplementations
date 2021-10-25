@@ -48,6 +48,22 @@ public class LinkedList {
         return head == null;
     }
 
+    public int removeAt(int index) {
+        if (isEmpty()) throw new NoSuchElementException();
+        Node targetNode = head;
+        Node prev = targetNode;
+        int i = 0;
+        while (i != index) {
+            prev = targetNode;
+            targetNode = head.next;
+            if (targetNode == null) throw new NoSuchElementException();
+            i++;
+        }
+        int removedData = targetNode.data;
+        prev.next = targetNode.next;
+        return removedData;
+    }
+
     public static void main(String[] args) {
         LinkedList list = new LinkedList();
         list.add(1);
