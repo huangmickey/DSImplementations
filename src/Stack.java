@@ -1,43 +1,44 @@
+import java.util.Arrays;
+
 public class Stack {
-    private int[] stackArr;
-    int ptr;
+    private int[] items = new int[5];
+    private int count;
 
-    public Stack(int size) {
-        stackArr = new int[size];
-    }
-
-    public void push(int num) {
-        if (isFull()) throw new IndexOutOfBoundsException("Stack is full");
-        stackArr[ptr++] = num;
+    public void push(int item) {
+        if (count == items.length)
+            throw new StackOverflowError();
+        items[count++] = item;
     }
 
     public int pop() {
-        if (isEmpty()) throw new IndexOutOfBoundsException("Stack empty");
-        return stackArr[ptr--];
+        if (isEmpty()) throw new IllegalStateException();
+        return items[--count];
     }
 
     public int peek() {
-        return stackArr[ptr];
+        if (isEmpty()) throw new IllegalStateException();
+        return items[count - 1];
     }
 
     public boolean isEmpty() {
-        return ptr == 0;
+        return count == 0;
     }
-
-    public boolean isFull() {
-        return ptr == stackArr.length;
-    }
-
     @Override
     public String toString() {
-        if (isEmpty()) return "[]";
-        StringBuilder sb = new StringBuilder();
-        sb.append("[");
-        for (int i = 0; i < ptr - 1; i++) {
-            sb.append(stackArr[i]).append(", ");
-        }
-
-        return sb.append(stackArr[ptr - 1]).append("]").toString();
+        int[] array = Arrays.copyOfRange(items, 0, count);
+        return Arrays.toString(array);
     }
 
+
+
+    public static void main(String[] args) {
+        Stack stack = new Stack();
+        stack.push(10);
+        stack.push(20);
+        stack.push(30);
+        stack.pop();
+        stack.pop();
+        System.out.println(stack.peek());
+        System.out.println(stack);
+    }
 }
