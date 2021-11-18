@@ -188,7 +188,7 @@ public class TwoTailLinkedList {
         return false;
     }
 
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         return first == null;
     }
 
