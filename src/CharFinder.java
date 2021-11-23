@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class CharFinder {
-    // Map is an interface with several different implementations such as HashMap.
+    // Map is an interface with several implementations such as HashMap.
     // "a green apple"
     public Character firstNonRepeatingChar(String str) {
         Map<Character, Integer> map = new HashMap<>();
@@ -40,6 +40,5 @@ public class CharFinder {
 
         ch = charFinder.firstRepeatedCharacter("abclskdmabc");
         System.out.println(ch);
-
     }
 }
