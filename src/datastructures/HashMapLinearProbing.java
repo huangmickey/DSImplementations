@@ -78,7 +78,6 @@ public class HashMapLinearProbing {
         hashMap.put(3, "C");
         hashMap.put(4, "D");
         hashMap.put(5, "E");
-        hashMap.put(6, "F");
         System.out.println(hashMap.get(3));
         hashMap.remove(3);
         System.out.println(hashMap.get(3));
