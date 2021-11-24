@@ -1,4 +1,4 @@
-package datastructures;
+package com.datastructures.exercises;
 
 import java.util.ArrayDeque;
 import java.util.Queue;

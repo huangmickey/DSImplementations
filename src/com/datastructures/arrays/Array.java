@@ -1,4 +1,4 @@
-package datastructures;
+package com.datastructures.arrays;
 
 public class Array {
     private int[] items;

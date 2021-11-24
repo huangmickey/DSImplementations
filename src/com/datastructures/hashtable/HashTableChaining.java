@@ -1,4 +1,4 @@
-package datastructures;
+package com.datastructures.hashtable;
 
 import java.util.Arrays;
 import java.util.LinkedList;

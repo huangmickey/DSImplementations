@@ -1,4 +1,4 @@
-package datastructures;
+package com.datastructures.linkedlist;
 
 public class LinkedListQueue {
 
