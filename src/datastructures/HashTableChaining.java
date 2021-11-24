@@ -1,3 +1,5 @@
+package datastructures;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -10,7 +12,7 @@ public class HashTableChaining {
     // k : int
     // v : String
     // Collisions: chaining (linked lists)
-    // [LL , LL , LL , LL] = linked list array LinkedList<Entry>[]
+    // [LL , LL , LL , LL] = linked list array datastructures.LinkedList<Entry>[]
     // Entry has two private fields k, v
 
     private class Entry {

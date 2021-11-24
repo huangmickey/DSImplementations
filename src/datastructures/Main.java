@@ -1,9 +1,11 @@
+package datastructures;
+
 import java.util.*;
 import java.util.PriorityQueue;
 
 public class Main {
     public static void main(String[] args) {
-/*        PriorityQueue<Integer> queue = new PriorityQueue<>();
+/*        datastructures.PriorityQueue<Integer> queue = new datastructures.PriorityQueue<>();
         queue.add(5);
         queue.add(1);
         queue.add(3);

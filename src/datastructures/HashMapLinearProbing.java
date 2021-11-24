@@ -1,3 +1,5 @@
+package datastructures;
+
 public class HashMapLinearProbing {
 
     // - put(int, String)

@@ -1,4 +1,4 @@
-import java.util.Arrays;
+package datastructures;
 
 public class LinkedListQueue {
 
