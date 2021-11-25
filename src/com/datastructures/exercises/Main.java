@@ -1,7 +1,6 @@
 package com.datastructures.exercises;
 
 import java.util.*;
-import java.util.PriorityQueue;
 
 public class Main {
     public static void main(String[] args) {
