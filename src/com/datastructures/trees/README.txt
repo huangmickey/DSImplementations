@@ -128,3 +128,17 @@ Complexity:
 -   Insert O(log n)
 -   Delete O(log n)
 If algorithm is bad, then complexity can be O(n) *** bad meaning how data is structured in the tree and accessed.
+
+
+Breadth First
+    - Level Order   : Level by Level
+Depth First
+    - Pre-order     : Root, Left, Right
+    - In-order      : Left, Root, Right     Order Comes in Ascending Order
+    - Post-order    : Left, Right, Root     (Leaves first)
+
+Breadth First = [20, 10, 30, 6, 14, 24, 3, 8, 26]
+Pre-order     = [20, 10, 6, 3, 8, 14, 30, 24, 26]
+In-order      = [3, 6, 8, 10, 14, 20, 24, 26, 30]
+Post-order    = [3, 8, 6, 14, 10, 26, 24, 30, 20]
+
