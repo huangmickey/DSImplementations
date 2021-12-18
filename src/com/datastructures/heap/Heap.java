@@ -1,5 +1,7 @@
 package com.datastructures.heap;
 
+import java.util.Arrays;
+
 public class Heap {
 
     private int[] items = new int[10];
@@ -14,7 +16,7 @@ public class Heap {
 
         //if new value is greater than its parent then bubble up
         int idx = size - 1;
-        while (items[idx] > items[parent(idx)]) {
+        while (idx > 0 && items[idx] > items[parent(idx)]) {
             // bubble up by swapping new value and parent value
             int temp = items[idx];
             items[idx] = items[parent(idx)];
@@ -24,46 +26,81 @@ public class Heap {
     }
 
     public int remove() {
-        if (size == 0) throw new IllegalStateException("Heap is empty");
-
+        if (isEmpty()) throw new IllegalStateException("Heap is empty");
+        int root = items[0];
         // remove index 0 of heap by getting updating index 0 with last element in heap
-
-        int removedValue = items[0];
-        items[0] = items[size - 1];
-        size--;
-        // now check for violations of heap with this new swap with bubbleDown
-
+        items[0] = items[--size];
         int idx = 0;
-
-        while (items[idx] < items[leftChild(idx)] || items[idx] < items[rightChild(idx)]) {
+        // now check for violations of heap with this new swap with bubbleDown
+        while (!isValidParent(idx)) {
+            int biggerChildIdx = biggerChildIdx(idx);
             int temp = items[idx];
-            int biggerChildIdx = rightChild(idx);
-            if (items[leftChild(idx)] > items[biggerChildIdx]) {
-                    biggerChildIdx = leftChild(idx);
-            }
             items[idx] = items[biggerChildIdx];
             items[biggerChildIdx] = temp;
-
+            // reset the idx to the proper position because while loop will
+            // continuously compare it against its new children nodes for heap status
             idx = biggerChildIdx;
         }
 
-        return removedValue;
+        return root;
     }
 
-    private int leftChild(int idx) {
+    private boolean isValidParent(int idx) {
+        if (!hasLeftChild(idx)) {
+            return true;
+        }
+
+        boolean isValid = items[idx] >= leftChildIdx(idx);
+
+        if (!hasRightChild(idx)) {
+            isValid = isValid && items[idx] >= rightChildIdx(idx);
+        }
+
+        return isValid;
+    }
+
+    private int biggerChildIdx(int idx) {
+        if (!hasLeftChild(idx))
+            return idx;
+        if (!hasRightChild(idx))
+            return leftChildIdx(idx);
+
+        return (items[leftChildIdx(idx)] > items[rightChildIdx(idx)])
+                ? leftChildIdx(idx) : rightChildIdx(idx);
+    }
+
+    private boolean hasLeftChild(int idx) {
+        return leftChildIdx(idx) <= size;
+    }
+
+    private boolean hasRightChild(int idx) {
+        return rightChildIdx(idx) <= size;
+    }
+
+    private int leftChildIdx(int idx) {
         return (idx * 2) + 1;
     }
 
-    private int rightChild(int idx) {
-        return leftChild(idx) + 1;
+    private int rightChildIdx(int idx) {
+        return (idx * 2) + 2;
+    }
+
+    private int parent(int idx) {
+        return (idx - 1) / 2;
     }
 
     public boolean isFull() {
         return size == items.length;
     }
 
-    private int parent(int idx) {
-        return (idx - 1) / 2;
+    public boolean isEmpty() {
+        return size == 0;
+    }
+    @Override
+    public String toString() {
+        int[] displayHeap = new int[size];
+        System.arraycopy(items, 0, displayHeap, 0, size);
+        return Arrays.toString(displayHeap);
     }
 
     public static void main(String[] args) {
@@ -72,8 +109,23 @@ public class Heap {
         heap.insert(5);
         heap.insert(4);
         heap.insert(1);
+        heap.insert(13);
+        heap.insert(3);
+        heap.insert(9);
+        heap.insert(2);
+        heap.insert(21);
+        heap.insert(19);
         heap.remove();
-
+        heap.remove();
+        heap.remove();
+        heap.remove();
+        heap.remove();
+        heap.remove();
+        heap.remove();
+        heap.remove();
+        heap.remove();
+        heap.remove();
+//        System.out.println(heap);
     }
 
 }
