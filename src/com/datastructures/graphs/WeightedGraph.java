@@ -134,6 +134,26 @@ public class WeightedGraph {
         return path;
     }
 
+    public boolean hasCycle() {
+        Set<Node> visited = new HashSet<>();
+
+        for (Node node :  nodes.values())
+            if (!visited.contains(node) && hasCycle(node, null, visited)) return true;
+
+        return false;
+    }
+
+    private boolean hasCycle(Node node, Node parent, Set<Node> visited) {
+        visited.add(node);
+
+        for (Edge edge : node.getEdges()) {
+            if (edge.to == parent) continue;
+            if (visited.contains(edge.to) || hasCycle(edge.to, node, visited)) return true;
+        }
+
+        return false;
+    }
+
     public static void main(String[] args) {
         WeightedGraph weightedGraph = new WeightedGraph();
         weightedGraph.addNode("A");
@@ -141,8 +161,9 @@ public class WeightedGraph {
         weightedGraph.addNode("C");
         weightedGraph.addEdge("A", "B", 1);
         weightedGraph.addEdge("B", "C", 2);
-        weightedGraph.addEdge("A", "C", 10);
+
         weightedGraph.print();
-        System.out.println(weightedGraph.getShortestPath("A", "K"));
+//        System.out.println(weightedGraph.getShortestPath("A", "K"));
+        System.out.println(weightedGraph.hasCycle());
     }
 }
