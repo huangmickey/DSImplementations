@@ -96,6 +96,12 @@ public class Heap {
     public boolean isEmpty() {
         return size == 0;
     }
+
+    public int max() {
+        if (isEmpty()) throw new IllegalStateException("Heap is empty");
+        return items[0];
+    }
+
     @Override
     public String toString() {
         int[] displayHeap = new int[size];
