@@ -9,12 +9,10 @@ public class TwoTailLinkedList {
         private int value;
         private Node next;
 
-
         public Node(int value) {
             this.value = value;
         }
     }
-
 
     private Node first;
     private Node last;

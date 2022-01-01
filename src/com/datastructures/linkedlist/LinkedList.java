@@ -30,6 +30,11 @@ public class LinkedList {
             this.next = null;
         }
 
+        @Override
+        public String toString() {
+            return Integer.toString(value);
+        }
+
     }
 
     private Node head;
@@ -83,11 +88,59 @@ public class LinkedList {
         return removedData;
     }
 
+    public void reverseRecursive() {
+        this.head = reverse(this.head);
+    }
+
+    private Node reverse(Node head) {
+        if (head == null || head.next == null) return head;
+        Node prev = reverse(head.next);
+        head.next.next = head;
+        head.next = null;
+        return prev;
+    }
+
+    //   10 -> 20 -> 30 -> null
+
+    public void reverseIterative() {
+        Node prev = null;
+        Node curr = head;
+        while (curr != null) {
+            Node next = curr.next;
+
+            curr.next = prev;
+
+            prev = curr;
+            curr = next;
+        }
+        head = prev;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder res = new StringBuilder();
+        Node curr = head;
+        while (curr != null) {
+            res.append(curr.value).append(" ");
+            curr = curr.next;
+        }
+        return res.toString();
+    }
+
     public static void main(String[] args) {
         LinkedList list = new LinkedList();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        System.out.println(list.remove());
+//        list.add(5);
+//        list.add(19);
+//        list.add(21);
+//        list.add(99);
+//        System.out.println(list);
+//        list.reverseRecursive();
+//        System.out.println(list);
+
+        LinkedList list2 = new LinkedList();
+        list2.add(5);
+        list2.reverseIterative();
+        System.out.println(list2);
+
     }
 }
