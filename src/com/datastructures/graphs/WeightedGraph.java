@@ -1,9 +1,6 @@
 package com.datastructures.graphs;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 // Weighted Undirected Graph
 public class WeightedGraph {
@@ -71,13 +68,81 @@ public class WeightedGraph {
         }
     }
 
+    private class NodeEntry {
+        private Node node;
+        private int priority;
+
+        public NodeEntry(Node node, int priority) {
+            this.node = node;
+            this.priority = priority;
+        }
+    }
+
+    public Path getShortestPath(String from, String to) {
+        Node fromNode = nodes.get(from);
+        if (fromNode == null) throw new IllegalArgumentException();
+        Node toNode = nodes.get(to);
+        if (toNode == null) throw new IllegalArgumentException();
+
+        Map<Node, Integer> distances = new HashMap<>();
+        for (Node node : nodes.values()) {
+            distances.put(node, Integer.MAX_VALUE);
+        }
+        distances.replace(fromNode, 0);
+
+        Map<Node, Node> previousNodes = new HashMap<>();
+
+        Set<Node> visited = new HashSet<>();
+
+        PriorityQueue<NodeEntry> queue = new PriorityQueue<>(
+                Comparator.comparingInt(ne -> ne.priority));
+        queue.add(new NodeEntry(fromNode, 0));
+
+        while (!queue.isEmpty()) {
+            Node curr = queue.remove().node;
+            visited.add(curr);
+
+            for (Edge edge : curr.getEdges()) {
+                if (visited.contains(edge.to)) continue;
+
+                int newDistance = distances.get(curr) + edge.weight;
+                if (newDistance < distances.get(edge.to)) {
+                    distances.put(edge.to, newDistance);
+                    previousNodes.put(edge.to, curr);
+                    queue.add(new NodeEntry(edge.to, newDistance));
+                }
+            }
+        }
+
+        return buildPath(previousNodes, toNode);
+    }
+
+    private Path buildPath(Map<Node, Node> previousNodes, Node toNode) {
+        Stack<Node> stack = new Stack<>();
+        stack.push(toNode);
+        Node prev = previousNodes.get(toNode);
+        while (prev != null) {
+            stack.push(prev);
+            prev = previousNodes.get(prev);
+        }
+
+        Path path = new Path();
+        while (!stack.isEmpty()) {
+            path.add(stack.pop().label);
+        }
+
+        return path;
+    }
+
     public static void main(String[] args) {
         WeightedGraph weightedGraph = new WeightedGraph();
         weightedGraph.addNode("A");
         weightedGraph.addNode("B");
         weightedGraph.addNode("C");
-        weightedGraph.addEdge("A", "B", 3);
-        weightedGraph.addEdge("A", "C", 2);
+        weightedGraph.addEdge("A", "B", 1);
+        weightedGraph.addEdge("B", "C", 2);
+        weightedGraph.addEdge("A", "C", 10);
         weightedGraph.print();
+        System.out.println(weightedGraph.getShortestPath("A", "K"));
     }
 }
