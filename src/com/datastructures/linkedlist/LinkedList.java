@@ -129,16 +129,19 @@ public class LinkedList {
 
     public static void main(String[] args) {
         LinkedList list = new LinkedList();
-//        list.add(5);
-//        list.add(19);
-//        list.add(21);
-//        list.add(99);
-//        System.out.println(list);
-//        list.reverseRecursive();
-//        System.out.println(list);
+        list.add(5);
+        list.add(19);
+        list.add(21);
+        list.add(99);
+        System.out.println(list);
+        list.reverseRecursive();
+        System.out.println(list);
 
         LinkedList list2 = new LinkedList();
         list2.add(5);
+        list2.add(19);
+        list2.add(21);
+        list2.add(99);
         list2.reverseIterative();
         System.out.println(list2);
 
