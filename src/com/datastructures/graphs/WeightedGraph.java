@@ -5,10 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// Weighted Undirected Graph
 public class WeightedGraph {
 
     private class Node {
         private String label;
+        private List<Edge> edges = new ArrayList<>();
 
         public Node(String label) {
             this.label = label;
@@ -17,6 +19,14 @@ public class WeightedGraph {
         @Override
         public String toString() {
             return this.label;
+        }
+
+        public void addEdge(Node to, int weight) {
+            edges.add(new Edge(this, to, weight));
+        }
+
+        public List<Edge> getEdges() {
+            return edges;
         }
     }
 
@@ -33,31 +43,31 @@ public class WeightedGraph {
 
         @Override
         public String toString() {
-            return from + " -> " + to + " weight: " + weight;
+            return from + "->" + to;
         }
     }
 
     private Map<String, Node> nodes = new HashMap<>();
-    private Map<Node, List<Edge>> adjacencyList = new HashMap<>();
 
     public void addNode(String label) {
-        Node node = new Node(label);
-        nodes.putIfAbsent(label, node);
-        adjacencyList.putIfAbsent(node, new ArrayList<>());
+        nodes.putIfAbsent(label, new Node(label));
     }
 
     public void addEdge(String from, String to, int weight) {
         Node fromNode = nodes.get(from);
         Node toNode = nodes.get(to);
-        if (fromNode == null || toNode == null) throw new IllegalArgumentException("Node does not exist");
-
-        adjacencyList.get(fromNode).add(new Edge(fromNode, toNode, weight));
-        adjacencyList.get(toNode).add(new Edge(toNode, fromNode, weight));
+        if (fromNode == null) throw new IllegalArgumentException("From node does not exist in graph");
+        if (toNode == null) throw new IllegalArgumentException("To node does not exist in graph");
+        fromNode.addEdge(toNode, weight);
+        toNode.addEdge(fromNode, weight);
     }
 
     public void print() {
         for (Node node : nodes.values()) {
-            System.out.println(adjacencyList.get(node));
+            List<Edge> edgeList = node.getEdges();
+            if (!edgeList.isEmpty()) {
+                System.out.println(node + " is connected to " + edgeList);
+            }
         }
     }
 
@@ -66,9 +76,8 @@ public class WeightedGraph {
         weightedGraph.addNode("A");
         weightedGraph.addNode("B");
         weightedGraph.addNode("C");
-        weightedGraph.addEdge("A", "B", 5);
-        weightedGraph.addEdge("C", "A", 10);
+        weightedGraph.addEdge("A", "B", 3);
+        weightedGraph.addEdge("A", "C", 2);
         weightedGraph.print();
-
     }
 }
