@@ -118,6 +118,68 @@ public class Graph {
        }
     }
 
+    public List<String> topologicalSort() {
+        Set<Node> visited = new HashSet<>();
+        Stack<Node> stack = new Stack<>();
+
+        for (Node node : nodes.values()) {
+            topologicalSort(node, visited, stack);
+        }
+
+        List<String> sorted = new ArrayList<>();
+        while (!stack.isEmpty()) {
+            sorted.add(stack.pop().label);
+        }
+
+        return sorted;
+    }
+
+    private void topologicalSort(Node node, Set<Node> visited, Stack<Node> stack) {
+        if (visited.contains(node)) return;
+
+        visited.add(node);
+
+        for (Node neighbour : adjacencyList.get(node)) {
+            topologicalSort(neighbour, visited, stack);
+        }
+
+        stack.push(node);
+    }
+
+    public boolean hasCycle() {
+        Set<Node> all = new HashSet<>(nodes.values());
+
+        Set<Node> visiting = new HashSet<>();
+        Set<Node> visited = new HashSet<>();
+
+        while (!all.isEmpty()) {
+            Node current = all.iterator().next();
+            if (hasCycle(current, all, visiting, visited)) return true;
+        }
+
+        return false;
+    }
+
+    private boolean hasCycle(Node node, Set<Node> all, Set<Node> visiting, Set<Node> visited) {
+        all.remove(node);
+        visiting.add(node);
+
+        for (Node neighbour : adjacencyList.get(node)) {
+            if (visited.contains(neighbour)) continue;
+
+            if (visiting.contains(neighbour)) return true;
+
+            if (hasCycle(neighbour, all, visiting, visited)) {
+                return true;
+            }
+        }
+
+        visiting.remove(node);
+        visited.add(node);
+
+        return false;
+    }
+
 
     public void print() {
         for (Node sourceNode : adjacencyList.keySet()) {
@@ -133,12 +195,11 @@ public class Graph {
         graph.addNode("A");
         graph.addNode("B");
         graph.addNode("C");
-        graph.addNode("D");
         graph.addEdge("A", "B");
-        graph.addEdge("A", "C");
-        graph.addEdge("B", "D");
-        graph.addEdge("D", "C");
+        graph.addEdge("B", "C");
+        graph.addEdge("C", "A");
+
         graph.print();
-        graph.traverseBreadthFirstIterative("A");
+        System.out.println(graph.hasCycle());
     }
 }
